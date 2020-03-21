@@ -136,33 +136,35 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
 }
     `;
 
-    var usrLnks = document.querySelectorAll('a[class=""][data-v-e08abd6e]')
-    for (const usrLnk of usrLnks) {
-        usrLnk.addEventListener('click', function(event) {
-            location.href = "/contribution/ip/" + this.innerText + "/document";
-        }, false);
-    }
+    var revert = setInterval(function() {
+        var usrLnks = document.querySelectorAll('a[class=""][data-v-e08abd6e]')
+        for (const usrLnk of usrLnks) {
+            usrLnk.addEventListener('click', function(event) {
+                location.href = "/contribution/ip/" + this.innerText + "/document";
+            }, false);
+        }
 
-    usrLnks = document.querySelectorAll('a[class="u"][data-v-e08abd6e]')
-    for (const usrLnk of usrLnks) {
-        usrLnk.addEventListener('click', function(event) {
-            location.href = "/w/사용자:" + this.innerText;
-        }, false);
-    }
+        usrLnks = document.querySelectorAll('a[class="u"][data-v-e08abd6e]')
+        for (const usrLnk of usrLnks) {
+            usrLnk.addEventListener('click', function(event) {
+                location.href = "/w/사용자:" + this.innerText;
+            }, false);
+        }
 
-    var ndha = setInterval(function() {
-        if(document.getElementById("noDisplayHideAuthor").checked)
-            document.getElementById("noDisplayHideAuthor").click();
+        var ndha = setInterval(function() {
+            if(document.getElementById("noDisplayHideAuthor").checked)
+                document.getElementById("noDisplayHideAuthor").click();
+        }, 1000);
+
+        function $(q) {
+            return document.querySelector(q);
+        }
+
+        if($("div.title h1").innerHTML == "오류") {
+            $("div.title h1").innerHTML = "문제가 발생했습니다!";
+            $("div.liberty-content-main.wiki-article div").innerHTML = '<h2>' + $("div.liberty-content-main.wiki-article div").innerHTML + "</h2>";
+        }
     }, 1000);
-
-    function $(q) {
-        return document.querySelector(q);
-    }
-
-    if($("div.title h1").innerHTML == "오류") {
-        $("div.title h1").innerHTML = "문제가 발생했습니다!";
-        $("div.liberty-content-main.wiki-article div").innerHTML = '<h2>' + $("div.liberty-content-main.wiki-article div").innerHTML + "</h2>";
-    }
 
     document.body.insertBefore(ss, document.getElementById('app'));
 })();
