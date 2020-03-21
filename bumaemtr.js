@@ -155,5 +155,14 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
             document.getElementById("noDisplayHideAuthor").click();
     }, 1000);
 
+    function $(q) {
+        return document.querySelector(q);
+    }
+
+    if($("div.title h1").innerHTML == "오류") {
+        $("div.title h1").innerHTML = "문제가 발생했습니다!";
+        $("div.liberty-content-main.wiki-article div").innerHTML = '<h2>' + $("div.liberty-content-main.wiki-article div").innerHTML + "</h2>";
+    }
+
     document.body.insertBefore(ss, document.getElementById('app'));
 })();
