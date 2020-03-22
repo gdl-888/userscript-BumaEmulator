@@ -13,6 +13,11 @@
 (function() {
     'use strict';
 
+    var jq = document.createElement('script');
+    jq.setAttribute('src', 'https://theseed.io/js/jquery-2.1.4.min.js');
+
+    document.body.insertBefore(jq, document.getElementById('app'));
+
     var ss = document.createElement('style');
     ss.innerHTML = `
 div.r div.c[data-v-085ae043] {
@@ -151,18 +156,29 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
             }, false);
         }
 
+        /* https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib */
+        /* jQuery 없으면 왜 이렇게 피곤하지.. */
+        function insertAfter(newNode, referenceNode) {
+            referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+        }
+
+        usrLnks = document.querySelectorAll('.r a.b[data-v-e08abd6e]')
+        for (const usrLnk of usrLnks) {
+            if(!$(usrLnk).parent().children("sub").length) {
+                var bi = document.createElement("sub");
+                bi.innerText = " (차단됨)";
+                usrLnk.after(bi);
+            }
+        }
+
         var ndha = setInterval(function() {
             if(document.getElementById("noDisplayHideAuthor").checked)
                 document.getElementById("noDisplayHideAuthor").click();
         }, 1000);
 
-        function $(q) {
-            return document.querySelector(q);
-        }
-
-        if($("div.title h1").innerHTML == "오류") {
-            $("div.title h1").innerHTML = "문제가 발생했습니다!";
-            $("div.liberty-content-main.wiki-article div").innerHTML = '<h2>' + $("div.liberty-content-main.wiki-article div").innerHTML + "</h2>";
+        if($("div.title h1").html() == "오류") {
+            $("div.title h1").html("문제가 발생했습니다!");
+            $("div.liberty-content-main.wiki-article div").html('<h2>' + $("div.liberty-content-main.wiki-article div").html() + "</h2>");
         }
     }, 1000);
 
