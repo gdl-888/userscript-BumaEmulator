@@ -13,6 +13,12 @@
 (function() {
     'use strict';
 
+    /* https://www.experts-exchange.com/questions/21058968/on-error-resume-next-for-javascript.html */
+    function handleError() {
+        return true;
+    }
+    window.onerror = handleError;
+
     var jq = document.createElement('script');
     jq.setAttribute('src', 'https://theseed.io/js/jquery-2.1.4.min.js');
 
@@ -20,6 +26,12 @@
 
     var ss = document.createElement('style');
     ss.innerHTML = `
+table[data-v-0f0079ab] thead tr, table[data-v-24f321a4] thead tr {
+    border-top: 1px solid #eceeef !important;
+}
+table[data-v-0f0079ab] tbody tr:hover, table[data-v-24f321a4] tbody tr:hover {
+    background-color: #f5f5f5 !important;
+}
 div.r div.c[data-v-085ae043] {
     display: block;
 }
@@ -112,12 +124,6 @@ select:focus, textarea:focus, input:not([type=checkbox]):not([type=radio]):focus
 select[disabled], textarea[disabled], input:not([type=checkbox]):not([type=radio])[disabled] {
     background: #eceeef !important;
 }
-table th[data-v-0f0079ab], table th[data-v-24f321a4] {
-    border-top: 1px solid #eceeef !important;
-}
-table tbody tr[data-v-0f0079ab]:hover, table tbody tr[data-v-24f321a4]:hover {
-    background-color: #f5f5f5;
-}
 li button[data-v-3b1bf9e7]:hover {
     border-color: #ddd #ddd transparent !important;
 }
@@ -139,21 +145,13 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
 #noDisplayHideAuthor, label[for="noDisplayHideAuthor"] {
     display: none !important;
 }
+table thead[data-v-0f0079ab] tr, table thead[data-v-24f321a4] tr {
+    border-top: 1px solid #eceeef !important;
+}
+table[data-v-0f0079ab] tbody tr:hover, table[data-v-24f321a4] tbody tr:hover {
+    background-color: #f5f5f5 !important;
+}
     `;
-
-    var usrLnks = document.querySelectorAll('a[class=""][data-v-e08abd6e]')
-    for (const usrLnk of usrLnks) {
-        usrLnk.addEventListener('click', function(event) {
-            location.href = "/contribution/ip/" + this.innerText + "/document";
-        }, false);
-    }
-
-    usrLnks = document.querySelectorAll('a[class="u"][data-v-e08abd6e]')
-    for (const usrLnk of usrLnks) {
-        usrLnk.addEventListener('click', function(event) {
-            location.href = "/w/사용자:" + this.innerText;
-        }, false);
-    }
 
     /* https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib */
     /* jQuery 없으면 왜 이렇게 피곤하지.. */
@@ -170,18 +168,37 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
         }
     }
 
-    $('a[href]:not([href="#"])').click(function() {
+    $('a[href]').click(function() {
         location.href = $(this).attr('href');
     });
 
-    if(document.getElementById("noDisplayHideAuthor").checked)
-        document.getElementById("noDisplayHideAuthor").click();
+    var usrLnks = document.querySelectorAll('a[class=""][data-v-e08abd6e]')
+    for (const usrLnk of usrLnks) {
+        usrLnk.addEventListener('click', function(event) {
+            location.href = "/contribution/ip/" + this.innerText + "/document";
+        }, false);
+    }
+
+    usrLnks = document.querySelectorAll('a[class="u"][data-v-e08abd6e]')
+    for (const usrLnk of usrLnks) {
+        usrLnk.addEventListener('click', function(event) {
+            location.href = "/w/사용자:" + this.innerText;
+        }, false);
+    }
+
+    try {
+        if(document.getElementById("noDisplayHideAuthor").checked) {
+            document.getElementById("noDisplayHideAuthor").click();
+        }
+    } catch(e) {}
 
 
-    if($("div.title h1").html() == "오류") {
-        $("div.title h1").html("문제가 발생했습니다!");
+    if($(".title").html() == "오류") {
+        $(".title").html("문제가 발생했습니다!");
         $("div.liberty-content-main.wiki-article div").html('<h2>' + $("div.liberty-content-main.wiki-article div").html() + "</h2>");
     }
+
+    $(".title h1").html($(".title h1").html().replace(/\s[(]역사[)]/, '의 역사').replace(/\s[(]역링크[)]/, '의 역링크'));
 
     if($("ul[data-v-7d7e0054]").length) {
         $("ul[data-v-7d7e0054]").attr("class", "nav nav-tabs");
@@ -206,31 +223,39 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
         }
     });
 
-    $(".h.f[data-v-085ae043]").attr('class', "h f r-head first-author");
-    $(".h[data-v-085ae043]").attr('class', "h r-head");
-    $(".b.h[data-v-085ae043]").attr('class', "b h r-body r-hidden-body");
-    $(".b[data-v-085ae043]").attr('class', "b r-body");
+    var resfix = setInterval(function() {
+        /*
+        $(".h.f[data-v-085ae043]").attr('class', "h f r-head first-author");
+        $(".h:not(.f)[data-v-085ae043]").attr('class', "h r-head");
+        $(".b.h[data-v-085ae043]").attr('class', "b h r-body r-hidden-body");
+        $(".b:not(.h)[data-v-085ae043]").attr('class', "b r-body");
+        */
 
-    if($(".res").length && !($(".combo.admin-menu").length)) {
-        $(".res").each(function() {
-            var thisObj = $(this);
-            if(thisObj.children("b").hasClass("h")) {
-                thisObj.append('<div class="combo admin-menu"><a href="/admin' + window.location.pathname + '/' + thisObj.children('.r-head').children('span').children('a').attr('id') + '/show" class="btn btn-danger btn-sm">[ADMIN] 숨기기 해제</a></div>');
-            } else {
-                thisObj.append('<div class="combo admin-menu"><a href="/admin' + window.location.pathname + '/' + thisObj.children('.r-head').children('span').children('a').attr('id') + '/hide" class="btn btn-danger btn-sm">[ADMIN] 숨기기</a></div>');
-            }
+        if($(".r").length) {
+            $(".res").each(function() {
+                var thisObj = $(this);
+                if(!thisObj.parent().hasClass("l") && !thisObj.children('.combo.admin-menu').length) {
+                    if(thisObj.children(".b").hasClass("h")) {
+                        thisObj.append('<div class="combo admin-menu"><a href="/admin' + window.location.pathname + '/' + thisObj.children('.h').children('span').children('a').attr('id') + '/show" class="btn btn-danger btn-sm">[ADMIN] 숨기기 해제</a></div>');
+                    } else {
+                        thisObj.append('<div class="combo admin-menu"><a href="/admin' + window.location.pathname + '/' + thisObj.children('.h').children('span').children('a').attr('id') + '/hide" class="btn btn-danger btn-sm">[ADMIN] 숨기기</a></div>');
+                    }
+                }
             });
 
-        $("form.c[data-v-3f12fd1d]").before(
-            `<form method="post" id="thread-status-form" action="/admin` + window.location.pathname + `/status"> [ADMIN] 쓰레드 상태 변경 <select name="status"> <option value="close">close </option><option value="pause">pause </option><option value="agree">agree </option></select> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
-        );
-        $("form.c[data-v-3f12fd1d]").before(
-            `<form method="post" id="thread-document-form" action="/admin` + window.location.pathname + `/document"> [ADMIN] 쓰레드 이동 <input type="text" name="document" value="연습장:새위키 연습장"> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
-        );
-        $("form.c[data-v-3f12fd1d]").before(
-            `<form method="post" id="thread-topic-form" action="/admin/` + window.location.pathname + `/topic"> [ADMIN] 쓰레드 주제 변경 <input type="text" name="topic" value="토론 연습장"> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
-        );
-    }
+            if(!$("#thread-status-form").length) {
+                $("form.c[data-v-3f12fd1d]").before(
+                    `<form method="post" id="thread-status-form" action="/admin` + window.location.pathname + `/status"> [ADMIN] 쓰레드 상태 변경 <select name="status"> <option value="close">close </option><option value="pause">pause </option><option value="agree">agree </option></select> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
+                );
+                $("form.c[data-v-3f12fd1d]").before(
+                    `<form method="post" id="thread-document-form" action="/admin` + window.location.pathname + `/document"> [ADMIN] 쓰레드 이동 <input type="text" name="document" value="연습장:새위키 연습장"> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
+                );
+                $("form.c[data-v-3f12fd1d]").before(
+                    `<form method="post" id="thread-topic-form" action="/admin/` + window.location.pathname + `/topic"> [ADMIN] 쓰레드 주제 변경 <input type="text" name="topic" value="토론 연습장"> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
+                );
+            }
+        }
+    }, 1000);
 
     $("form[data-v-3f12fd1d]").attr('id', 'new-thread-form');
 
