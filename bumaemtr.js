@@ -171,6 +171,10 @@ div[style][onmouseover][onmouseout] span[data-v-76ca162d] {
             }
         }
 
+        $('a[href]:not([href="#"])').click(function() {
+            location.href = $(this).attr('href');
+        });
+
         var ndha = setInterval(function() {
             if(document.getElementById("noDisplayHideAuthor").checked)
                 document.getElementById("noDisplayHideAuthor").click();
