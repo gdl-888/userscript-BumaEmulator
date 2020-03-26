@@ -248,10 +248,10 @@ table[data-v-0f0079ab] tbody tr:hover, table[data-v-24f321a4] tbody tr:hover {
                     `<form method="post" id="thread-status-form" action="/admin` + window.location.pathname + `/status"> [ADMIN] 쓰레드 상태 변경 <select name="status"> <option value="close">close </option><option value="pause">pause </option><option value="agree">agree </option></select> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
                 );
                 $("form.c[data-v-3f12fd1d]").before(
-                    `<form method="post" id="thread-document-form" action="/admin` + window.location.pathname + `/document"> [ADMIN] 쓰레드 이동 <input type="text" name="document" value="연습장:새위키 연습장"> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
+                    `<form method="post" id="thread-document-form" action="/admin` + window.location.pathname + `/document"> [ADMIN] 쓰레드 이동 <input type="text" name="document" value=""> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
                 );
                 $("form.c[data-v-3f12fd1d]").before(
-                    `<form method="post" id="thread-topic-form" action="/admin/` + window.location.pathname + `/topic"> [ADMIN] 쓰레드 주제 변경 <input type="text" name="topic" value="토론 연습장"> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
+                    `<form method="post" id="thread-topic-form" action="/admin/` + window.location.pathname + `/topic"> [ADMIN] 쓰레드 주제 변경 <input type="text" name="topic" value=""> <button id="changeBtn" class="d_btn type_blue" type="submit">변경</button> </form>`
                 );
             }
         }
