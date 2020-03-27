@@ -32,58 +32,7 @@ table[data-v-0f0079ab] thead tr, table[data-v-24f321a4] thead tr {
 table[data-v-0f0079ab] tbody tr:hover, table[data-v-24f321a4] tbody tr:hover {
     background-color: #f5f5f5 !important;
 }
-div.r div.c[data-v-085ae043] {
-    display: block;
-}
 
-div.r div.h.f[data-v-085ae043] {
-    background: #70cc93;
-}
-div.r div.h[data-v-085ae043] {
-    padding: 10px 12px 5px 15px;
-    background: #aaa;
-    border-radius: 4px 4px 0 0;
-    border: none;
-}
-div.r div.b[data-v-085ae043] {
-padding: 5px 10px 10px 15px;
-background: #e8e8e8;
-border-radius: 0 0 4px 4px;
-overflow-x: scroll;
-border: none;
-}
-div.r div.b.s[data-v-085ae043] {
-    background: orange;
-}
-@keyframes head-loading {
-    from {
-        background-color:#747474;
-    } to {
-        background-color:#cacaca;
-    }
-}
-@keyframes body-loading {
-    from {
-        background-color:#e2d7d7;
-    } to {
-        background-color:#f3f3f3;
-    }
-}
-div.r[data-v-085ae043] {
-    margin: 30px 0;
-}
-div.r.l div.h[data-v-085ae043], div.r.l.v[data-v-085ae043] {
-    animation: head-loading .5s infinite !important;
-    -moz-animation: head-loading .5s infinite !important;
-    -webkit-animation: head-loading .5s infinite !important;
-}
-div.r.l div.b[data-v-085ae043] {
-    animation: body-loading .5s infinite !important;
-    -moz-animation: body-loading .5s infinite !important;
-    -webkit-animation: head-loading .5s infinite !important;
-    padding: 10px !important;
-    height: 30px !important;
-}
 button[data-v-64c847a2], a[data-v-760ceebb] {
 display: inline-block;
 font-weight: 400;
