@@ -76,10 +76,6 @@ select[disabled], textarea[disabled], input:not([type=checkbox]):not([type=radio
 li button[data-v-3b1bf9e7]:hover {
     border-color: #ddd #ddd transparent !important;
 }
-div.r div.b.h[data-v-085ae043] {
-    background: #000 !important;
-    color: #fff;
-}
 a.b[data-v-e08abd6e] {
     color: #0275d8 !important;
     text-decoration: none !important;
